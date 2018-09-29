@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Video Streaming</string>
+    <string name="title_activity_exo_player">ExoPlayer</string>
+    <string name="title_play_default_url">Play Default Video</string>
+    <string name="title_play_url">Play Video by Url</string>
+    <string name="error_message_url_not_valid">This Url is not valid. Please enter a valid Url</string>
+</resources>
