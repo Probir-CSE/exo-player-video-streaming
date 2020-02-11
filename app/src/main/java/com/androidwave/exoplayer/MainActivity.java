@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         // set prompts.xml to alertdialog builder
         alertDialogBuilder.setView(promptsView);
 
-        final EditText userInputURL = (EditText) promptsView
+        final EditText userInputURL =  promptsView
                 .findViewById(R.id.editTextDialogUrlInput);
 
         // set dialog message
@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 //        VVVideoFromRaw.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
 //        player.setPlayWhenReady(true);
 //
+//----------------------------------------------------------------------------------
         // Setup Exoplayer instance
         SimpleExoPlayer exoPlayer = ExoPlayerFactory
                 .newSimpleInstance(new DefaultRenderersFactory(this)
