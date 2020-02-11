@@ -1,5 +1,6 @@
 package com.androidwave.exoplayer;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,11 +20,14 @@ import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.RawResourceDataSource;
+import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,13 +56,10 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.buttonPlayUrlVideo:
                 showDialogPrompt();
-                VVVideoFromRaw.setVisibility(View.VISIBLE);
-                playVideoFromRaw();
                 break;
             case R.id.buttonPlayDefaultVideo:
 //                Intent mIntent = ExoPlayerActivity.getStartIntent(this, VideoPlayerConfig.DEFAULT_VIDEO_URL);
 //                startActivity(mIntent);
-                VVVideoFromRaw.setVisibility(View.VISIBLE);
                 playVideoFromRaw();
                 break;
         }
@@ -113,27 +114,45 @@ public class MainActivity extends AppCompatActivity {
     private void playVideoFromRaw() {
         VVVideoFromRaw.setVisibility(View.VISIBLE);
 
-        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
-                new DefaultRenderersFactory(this),
-                new DefaultTrackSelector(), new DefaultLoadControl());
+//        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
+//                new DefaultRenderersFactory(this),
+//                new DefaultTrackSelector(), new DefaultLoadControl());
+//
+//        String videoPath = RawResourceDataSource.buildRawResourceUri(R.raw.sample_video).toString();
+//
+//        Uri uri = RawResourceDataSource.buildRawResourceUri(R.raw.sample_video);
+//
+//        ExtractorMediaSource audioSource = new ExtractorMediaSource(
+//                uri,
+//                new DefaultDataSourceFactory(this, "MyExoplayer"),
+//                new DefaultExtractorsFactory(),
+//                null,
+//                null
+//        );
+//
+//        player.prepare(audioSource);
+//        VVVideoFromRaw.setPlayer(player);
+//        VVVideoFromRaw.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
+//        player.setPlayWhenReady(true);
+//
+        // Setup Exoplayer instance
+        SimpleExoPlayer exoPlayer = ExoPlayerFactory
+                .newSimpleInstance(new DefaultRenderersFactory(this)
+                        , new DefaultTrackSelector()
+                        , new DefaultLoadControl());
+        // Produces DataSource instances through which media data is loaded.
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, "simpleExoPlayer"));
 
-        String videoPath = RawResourceDataSource.buildRawResourceUri(R.raw.sample_video).toString();
+        //Getting media from raw resource
+        MediaSource firstSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(RawResourceDataSource
+                        .buildRawResourceUri(R.raw.sample_video));
+        //Prepare the exoPlayer with the source
+        exoPlayer.prepare(firstSource);
 
-        Uri uri = RawResourceDataSource.buildRawResourceUri(R.raw.sample_video);
-
-        ExtractorMediaSource audioSource = new ExtractorMediaSource(
-                uri,
-                new DefaultDataSourceFactory(this, "MyExoplayer"),
-                new DefaultExtractorsFactory(),
-                null,
-                null
-        );
-
-        player.prepare(audioSource);
-        VVVideoFromRaw.setPlayer(player);
-        VVVideoFromRaw.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
-        player.setPlayWhenReady(true);
-
+        VVVideoFromRaw.setPlayer(exoPlayer);
+        exoPlayer.setPlayWhenReady(true);
 
     }
 }
