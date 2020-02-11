@@ -40,4 +40,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/VV_videoFromRaw"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPlayDefaultVideo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

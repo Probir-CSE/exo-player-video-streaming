@@ -10,5 +10,5 @@ public class VideoPlayerConfig {
     //Min video You want to buffer when user resumes video
     public static final int MIN_PLAYBACK_RESUME_BUFFER = 5000;
 
-    public static final String DEFAULT_VIDEO_URL = "https://androidwave.com/wp-content/uploads/2018/09/exo-player-androidwave-com-match-highlight.mp4";
+    public static final String DEFAULT_VIDEO_URL = "https://androidwave.com/media/androidwave-video-3.mp4";
 }
